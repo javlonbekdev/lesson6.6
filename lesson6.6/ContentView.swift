@@ -6,16 +6,21 @@
 //
 
 import SwiftUI
+import Alamofire
 
 struct ContentView: View {
+    @ObservedObject var viewModel = PostViewModel()
     var body: some View {
-        Text("Hello, world!")
-            .padding()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        VStack{
+            Text("salom")
+            List{
+                ForEach(viewModel.posts, id: \.id) { post in
+                    Text("\(post.title!)").font(.largeTitle)
+                    Text("\(post.body!)").foregroundColor(.gray)
+                }
+            }
+        }.onAppear {
+            viewModel.apiPostList()
+        }
     }
 }
